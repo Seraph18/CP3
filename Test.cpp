@@ -1,19 +1,13 @@
-#include "NodeHeader.h"
+#include "LinkedList.h"
 
-using namespace std;
+int main(int argc, char const *argv[])
+{
+    LinkedList list1;
+    Activity *a = new Activity("Basketball", "Josh Gordon", "Town Hall", true);
 
-
-int main(int argc, char *argv[]){
-
-    NodeHeader<int> linkedList;
-
-    linkedList.addNewNode(1);
-    linkedList.addNewNode(2);
-    linkedList.addNewNode(3);
-    linkedList.addNewNode(4);
-    linkedList.addNewNode(5);
-
-    linkedList.printList();
+    list1.addNewNode(a);
+    
+    list1.print();
 
     return 0;
 }
