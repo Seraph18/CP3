@@ -9,10 +9,13 @@ Activity.o: Activity.cpp
 LinkedList.o: LinkedList.cpp
 	$(CFLAGS) LinkedList.cpp -o LinkedList.o
 
+User.o: User.cpp
+	$(CFLAGS) User.cpp -o User.o
+
 #Test target
 
-test: Activity.o LinkedList.o Test.o
-	g++ Activity.o LinkedList.o Test.o -o test.exe
+test: Activity.o LinkedList.o User.o Test.o
+	g++ Activity.o LinkedList.o Test.o User.o -o test.exe
 
 Test.o: Test.cpp
 	$(CFLAGS) Test.cpp -o Test.o 
