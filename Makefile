@@ -14,10 +14,13 @@ LinkedList.o: $(SRCPATH)LinkedList.cpp
 User.o: $(SRCPATH)User.cpp
 	$(CFLAGS)User.cpp -o User.o
 
+Time.o: $(SRCPATH)Time.cpp
+	$(CFLAGS)Time.cpp -o Time.o
+
 #Test target
 
-test: Activity.o LinkedList.o User.o Test.o
-	g++ Activity.o LinkedList.o Test.o User.o -o test.exe
+test: Activity.o LinkedList.o User.o Test.o Time.o
+	g++ Activity.o LinkedList.o Test.o User.o Time.o -o test.exe
 
 Test.o: $(SRCPATH)Test.cpp
 	$(CFLAGS)Test.cpp -o Test.o 

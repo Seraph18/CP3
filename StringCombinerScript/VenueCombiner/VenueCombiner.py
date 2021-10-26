@@ -1,5 +1,7 @@
 from os import stat
 import random
+import sys
+
 
 venueList = open("/home/josh/Documents/CS240/CP3/StringCombinerScript/ListOfVenues.txt", 'r')
 statesList = open("/home/josh/Documents/CS240/CP3/StringCombinerScript/ListOfStates.txt", 'r')
