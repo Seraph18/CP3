@@ -1,14 +1,16 @@
 #include "LinkedList.h"
 
-LinkedList::LinkedList(){
+
+ActivityLinkedList::ActivityLinkedList(){
     this->firstNode = nullptr;
     this->nElements = 0;
 }
 
-void LinkedList::addNewNode(Activity *a){
+
+void ActivityLinkedList::addNewNode(Activity const& newData){
     //Create new node
-    Node *newNode = new Node();
-    newNode->data = *a;
+    ActivityNode* newNode = new ActivityNode();
+    newNode->data = newData;
 
     //Set next pointer for the new node to the first node
     newNode->next = firstNode;
@@ -17,8 +19,8 @@ void LinkedList::addNewNode(Activity *a){
 }
 
 
-void LinkedList::print(){
-    Node *currNode;
+void ActivityLinkedList::print(){
+    ActivityNode *currNode;
     for (currNode = this->firstNode; currNode->next != nullptr; currNode = currNode->next)
     {
         currNode->data.print();
