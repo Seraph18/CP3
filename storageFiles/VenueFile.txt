@@ -1,50 +1,50 @@
-Los_Angeles_Memorial_Coliseum 5289 Alabama
-Miami_Orange_Bowl 2800 Alaska
-Miami_Orange_Bowl 8804 Arizona
-Tulane_Stadium 6486 Arkansas
-Miami_Orange_Bowl 6500 California
-Tulane_Stadium 2184 Colorado
-Los_Angeles_Memorial_Coliseum 3736 Connecticut
-Rice_Stadium 2466 Delaware
-Tulane_Stadium 837 Florida
-Miami_Orange_Bowl 7747 Georgia
-Rose_Bowl 862 Hawaii
-Louisiana_Superdome 9733 Idaho
-Miami_Orange_Bowl 8246 Illinois
-Rose_Bowl 9420 Indiana
-Louisiana_Superdome 6620 Iowa
-Pontiac_Silverdome 6256 Kansas
-Rose_Bowl 6136 Kentucky
-Tampa_Stadium 645 Louisiana
-Stanford_Stadium 5867 Maine
-Louisiana_Superdome 2638 Maryland
-Rose_Bowl 2563 Massachusetts
-San_Diego–Jack_Murphy_Stadium 8716 Michigan
-Joe_Robbie_Stadium 2133 Minnesota
-Louisiana_Superdome 9231 Mississippi
-Tampa_Stadium 9708 Missouri
-Metrodome 882 Montana
-Rose_Bowl 8434 Nebraska
-Georgia_Dome 1917 Nevada
-Joe_Robbie_Stadium 5248 New Hampshire
-Sun_Devil_Stadium 5728 New Jersey
-Louisiana_Superdome 2831 New Mexico
-Qualcomm_Stadium 7301 New York
-Pro_Player_Stadium 891 North Carolina
-Georgia_Dome 1561 North Dakota
-Raymond_James_Stadium 6616 Ohio
-Louisiana_Superdome 9033 Oklahoma
-Qualcomm_Stadium 3214 Oregon
-Reliant_Stadium 3976 Pennsylvania
-Alltel_Stadium 5800 Rhode Island
-Ford_Field 7726 South Carolina
-Dolphin_Stadium 3001 South Dakota
-University_of_Phoenix_Stadium 6419 Tennessee
-Raymond_James_Stadium 8832 Texas
-Sun_Life_Stadium 5477 Utah
-Cowboys_Stadium 9363 Vermont
-Lucas_Oil_Stadium 9051 Virginia
-Mercedes-Benz_Superdome 573 Washington
-MetLife_Stadium 537 West Virginia
-University_of_Boston_Stadium 764 Wisconsin
-Levi’s_Stadium 6510 Wyoming
+Los_Angeles_Memorial_Coliseum 498 Alabama
+Miami_Orange_Bowl 9361 Alaska
+Miami_Orange_Bowl 1711 Arizona
+Tulane_Stadium 7369 Arkansas
+Miami_Orange_Bowl 9162 California
+Tulane_Stadium 9187 Colorado
+Los_Angeles_Memorial_Coliseum 3989 Connecticut
+Rice_Stadium 6458 Delaware
+Tulane_Stadium 4305 Florida
+Miami_Orange_Bowl 9532 Georgia
+Rose_Bowl 3527 Hawaii
+Louisiana_Superdome 518 Idaho
+Miami_Orange_Bowl 2596 Illinois
+Rose_Bowl 2672 Indiana
+Louisiana_Superdome 2734 Iowa
+Pontiac_Silverdome 5419 Kansas
+Rose_Bowl 6639 Kentucky
+Tampa_Stadium 9780 Louisiana
+Stanford_Stadium 8903 Maine
+Louisiana_Superdome 6080 Maryland
+Rose_Bowl 7574 Massachusetts
+San_Diego–Jack_Murphy_Stadium 5432 Michigan
+Joe_Robbie_Stadium 602 Minnesota
+Louisiana_Superdome 7559 Mississippi
+Tampa_Stadium 7229 Missouri
+Metrodome 6995 Montana
+Rose_Bowl 3483 Nebraska
+Georgia_Dome 3851 Nevada
+Joe_Robbie_Stadium 5810 New_Hampshire
+Sun_Devil_Stadium 8735 New_Jersey
+Louisiana_Superdome 6230 New_Mexico
+Qualcomm_Stadium 5671 New_York
+Pro_Player_Stadium 5856 North_Carolina
+Georgia_Dome 6560 North_Dakota
+Raymond_James_Stadium 9804 Ohio
+Louisiana_Superdome 2607 Oklahoma
+Qualcomm_Stadium 2556 Oregon
+Reliant_Stadium 2753 Pennsylvania
+Alltel_Stadium 6996 Rhode_Island
+Ford_Field 4500 South_Carolina
+Dolphin_Stadium 5660 South_Dakota
+University_of_Phoenix_Stadium 7556 Tennessee
+Raymond_James_Stadium 6629 Texas
+Sun_Life_Stadium 5009 Utah
+Cowboys_Stadium 4864 Vermont
+Lucas_Oil_Stadium 6695 Virginia
+Mercedes-Benz_Superdome 2565 Washington
+MetLife_Stadium 6455 West_Virginia
+University_of_Boston_Stadium 9259 Wisconsin
+Levi’s_Stadium 4516 Wyoming

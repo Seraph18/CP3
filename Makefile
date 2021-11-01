@@ -9,7 +9,7 @@ ATTENDANCEFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/AttendanceFile.
 VENUEFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/VenueFile.txt
 
 ALLPATHS = $(VENUEFILEPATH) $(USERFILEPATH) $(ACTIVITYFILEPATH) $(ATTENDANCEFILEPATH)
-
+FULLCOMPILELIST = User.o Time.o Venue.o Activity.o LinkedList.o
 
 #Makefile for CP3
 
@@ -18,8 +18,13 @@ all: main runProgram
 runProgram:cp3.exe
 	./cp3.exe $(ALLPATHS)
 
-main: Venue.o Activity.o ActivityLinkedList.o User.o Time.o VenueLinkedList.o main.o 
-	g++ Venue.o Activity.o ActivityLinkedList.o User.o Time.o VenueLinkedList.o main.o -o cp3.exe
+runProgramWithDebug: cp3.exe
+	./cp3.exe $(ALLPATHS) y
+
+bug: main runProgramWithDebug
+
+main: $(FULLCOMPILELIST) main.o 
+	g++ $(FULLCOMPILELIST) main.o -o cp3.exe
 
 main.o: $(SRCPATH)main.cpp
 	$(CFLAGS)main.cpp -o main.o
@@ -27,11 +32,8 @@ main.o: $(SRCPATH)main.cpp
 Activity.o: $(SRCPATH)Activity.cpp
 	$(CFLAGS)Activity.cpp -o Activity.o 
 
-ActivityLinkedList.o: $(SRCPATH)ActivityLinkedList.cpp $(HEADERSPATH)LinkedList.h
-	$(CFLAGS)ActivityLinkedList.cpp -o ActivityLinkedList.o
-
-VenueLinkedList.o: $(SRCPATH)VenueLinkedList.cpp $(HEADERSPATH)LinkedList.h
-	$(CFLAGS)VenueLinkedList.cpp -o VenueLinkedList.o
+LinkedList.o: $(SRCPATH)LinkedList.cpp
+	$(CFLAGS)LinkedList.cpp -o LinkedList.o
 
 User.o: $(SRCPATH)User.cpp
 	$(CFLAGS)User.cpp -o User.o
@@ -44,8 +46,8 @@ Venue.o: $(SRCPATH)Venue.cpp
 
 #Test target
 
-test: Activity.o ActivityLinkedList.o User.o Test.o Time.o
-	g++ Activity.o ActivityLinkedList.o Test.o User.o Time.o -o test.exe
+test: $(FULLCOMPILELIST) Test.o
+	g++ $(FULLCOMPILELIST) Test.o -o test
 
 Test.o: $(SRCPATH)Test.cpp
 	$(CFLAGS)Test.cpp -o Test.o 
@@ -53,7 +55,7 @@ Test.o: $(SRCPATH)Test.cpp
 # Specify the object files and executables that are generated
 # and need to be removed to re-compile the whole thing
 clean:
-	rm -rf *.o .nfs* *.exe
+	rm -rf *.o .nfs* *.exe test
 
 clear: clean
 	clear

@@ -13,5 +13,12 @@ Venue::Venue(string venueName, string location, int capacity){
 }
 
 void Venue::print(){
-    cout << "Venue Name : " << venueName << " Location: " << location << " Max Capacity: " << capacity << endl;
+    cout << "Venue Name: " << this->getVenueName() << " Location: " << this->getVenueLocation() << " Max-Capacity: " << this->getVenueCapacity() << endl;
+}
+
+bool Venue::operator==(const Venue& other){
+    if(this->venueName == other.venueName){
+        return true;
+    }
+    return false;
 }

@@ -11,14 +11,27 @@ Activity::Activity()
     this->endTime.setDateAndTime("00-00-0000", "00:00:00");
 }
 
-Activity::Activity(string activityTitle, string creator, string venue, Time startTime, Time endTime, bool exclusive)
-{
+Activity::Activity(string activityTitle,
+string creator,
+             string venue,
+             string startTime,
+             string startDate,
+             string endTime,
+             string endDate,
+             string exclusive){
     this->activityTitle = activityTitle;
     this->creator.setUsername(creator);
     this->venue.setVenueName(venue);
-    this->startTime = startTime;
-    this->endTime = endTime;
-    this->exclusive = exclusive;
+    this->startTime.setDateAndTime(startDate, startTime);
+    this->endTime.setDateAndTime(endDate, endTime);
+    
+    
+    if(exclusive == "y"){
+        this->exclusive = true;
+    }
+    else{
+    this->exclusive = false;
+    }
 }
 //Onject specialized constructor
 Activity::Activity(string activityTitle, User creator, Venue venue, Time startTime, Time endTime, bool exclusive)
@@ -35,7 +48,14 @@ void Activity::print()
 {
     cout << activityTitle << ": ";
     cout << "Creator: " << creator.getUserName() << " ";
-    cout << "Begins: [" << startTime.getTime() << " " << startTime.getDate() << "] ";
-    cout << "Ends: [" << endTime.getTime() << " " << endTime.getDate() << "] ";
-    cout << "@ [" << venue.getVenueName() << "] " << endl;
+    cout << "Begins: [" << startTime.getTime() << ", " << startTime.getDate() << "] ";
+    cout << "Ends: [" << endTime.getTime() << ", " << endTime.getDate() << "] ";
+    cout << "@ [" << venue.getVenueName() << "]" << endl;
+}
+
+bool Activity::operator==(const Activity& other){
+    if(this->activityTitle == other.activityTitle){
+        return true;
+    }
+    return false;
 }

@@ -24,5 +24,7 @@ public:
     void setVenueName(string venueName) { this->venueName = venueName; }
 
     void print();
+
+    bool operator==(const Venue& other);
 };
 #endif

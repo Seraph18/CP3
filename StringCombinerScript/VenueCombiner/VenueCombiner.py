@@ -3,8 +3,8 @@ import random
 import sys
 
 
-venueList = open("/home/josh/Documents/CS240/CP3/StringCombinerScript/ListOfVenues.txt", 'r')
-statesList = open("/home/josh/Documents/CS240/CP3/StringCombinerScript/ListOfStates.txt", 'r')
+venueList = open("/home/josh/Documents/CS240/CP3/StringCombinerScript/VenueCombiner/ListOfVenues.txt", 'r')
+statesList = open("/home/josh/Documents/CS240/CP3/StringCombinerScript/VenueCombiner/ListOfStates.txt", 'r')
 
 listOfVenues = venueList.readlines()
 for i in listOfVenues:
@@ -17,7 +17,9 @@ for i in listOfVenues:
 listOfStates = statesList.readlines()
 for i in listOfStates:
     currState = i.strip()
-    listOfStates[listOfStates.index(i)] = currState.replace("\n", "")
+    currState = currState.replace("\n", "")
+    currState = currState.replace(" ", "_")
+    listOfStates[listOfStates.index(i)] = currState
 venueFileFinal = open("/home/josh/Documents/CS240/CP3/storageFiles/VenueFile.txt", 'w')
 
 for i in range(len(listOfVenues)):

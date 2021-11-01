@@ -1,9 +1,6 @@
 #ifndef ACTIVITY_H
 #define ACTIVITY_H
 
-#include <string>
-#include <string.h>
-#include <iostream>
 #include "Time.h"
 #include "User.h"
 #include "Venue.h"
@@ -25,14 +22,23 @@ public:
     Activity();
     Activity(string activityTitle,
              string creator,
-             string venue, 
-             Time startTime, 
+             string venue,
+             Time startTime,
              Time endTime,
              bool exclusive);
     Activity(string activityTitle,
+             string creator,
+             string venue,
+             string startTime,
+             string startDate,
+             string endTime,
+             string endDate,
+             string exclusive);
+
+    Activity(string activityTitle,
              User creator,
-             Venue venue, 
-             Time startTime, 
+             Venue venue,
+             Time startTime,
              Time endTime,
              bool exclusive);
 
@@ -45,5 +51,8 @@ public:
     Time getEndTime() { return endTime; }
 
     void print();
+
+    bool operator==(const Activity& other);
+
 };
 #endif
