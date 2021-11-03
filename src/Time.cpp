@@ -85,5 +85,30 @@ void Time::setDateAndTime(string date, string time){
     this->setTime(time);
 }
 
+bool Time::operator<(const Time& timeToCompare){
+    if(this->getYears() >= timeToCompare.year){
+        return false;
+    }
+    else if(this->getMonths() >= timeToCompare.month){
+        return false;
+    }
+    else if(this->getDays() >= timeToCompare.day){
+        return false;
+    }
+    else if(this->getHours() >= timeToCompare.hour){
+        return false;
+    }
+    else if(this->getMinutes() >= timeToCompare.minute){
+        return false;
+    }
+    else if(this->getSeconds() >= timeToCompare.second){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+
 string Time::getTime(){return this->time;}
 string Time::getDate(){return this->date;}

@@ -9,7 +9,7 @@ ATTENDANCEFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/AttendanceFile.
 VENUEFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/VenueFile.txt
 
 ALLPATHS = $(VENUEFILEPATH) $(USERFILEPATH) $(ACTIVITYFILEPATH) $(ATTENDANCEFILEPATH)
-FULLCOMPILELIST = User.o Time.o Venue.o Activity.o LinkedList.o
+FULLCOMPILELIST = LinkedList.o Time.o Venue.o User.o Activity.o
 
 #Makefile for CP3
 

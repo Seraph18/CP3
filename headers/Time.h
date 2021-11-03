@@ -32,7 +32,9 @@ class Time{
         int getSeconds(){return second;}
 
         int getValueFromTimeArr(int i){return dateAndTimeArr[i];}
-    
+
+        bool operator<(const Time& timeToCompare); //Check if the current time comes before
+
     private:
         string date;
         string time;
