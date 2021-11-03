@@ -13,18 +13,20 @@ FULLCOMPILELIST = LinkedList.o Time.o Venue.o User.o Activity.o
 
 #Makefile for CP3
 
-all: main runProgram
+all: main 
 
-runProgram:cp3.exe
-	./cp3.exe $(ALLPATHS)
+r: main runProgram
 
-runProgramWithDebug: cp3.exe
-	./cp3.exe $(ALLPATHS) y
+runProgram:cp3
+	./cp3 $(ALLPATHS)
+
+runProgramWithDebug: cp3
+	./cp3 $(ALLPATHS) y
 
 bug: main runProgramWithDebug
 
 main: $(FULLCOMPILELIST) main.o 
-	g++ $(FULLCOMPILELIST) main.o -o cp3.exe
+	g++ $(FULLCOMPILELIST) main.o -o cp3
 
 main.o: $(SRCPATH)main.cpp
 	$(CFLAGS)main.cpp -o main.o
@@ -55,7 +57,7 @@ Test.o: $(SRCPATH)Test.cpp
 # Specify the object files and executables that are generated
 # and need to be removed to re-compile the whole thing
 clean:
-	rm -rf *.o .nfs* *.exe test OutputFiles/*
+	rm -rf *.o .nfs* *.exe test OutputFiles/* cp3
 
 clear: clean
 	clear

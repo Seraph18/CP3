@@ -427,6 +427,15 @@ void writeAttendanceFile(LinkedList<User> *listOfAllUsers, string inputFilePath,
 
 int main(int argc, char *const argv[])
 {
+    cout << argc << endl;
+    if (argc < 5 || argc > 6)
+    {
+        cout << "Incorrect Usage..." << endl;
+        cout << "Correct Usage: './cp3 <venuefile> <userfile> <activityfile> <attendancefile>'" << endl;
+        cout << "Terminating Program..." << endl;
+        return 1;
+    }
+
     string venuePath = argv[1];
     string userPath = argv[2];
     string activityPath = argv[3];
@@ -437,7 +446,7 @@ int main(int argc, char *const argv[])
     LinkedList<User> *listOfAllUsers = new LinkedList<User>;
     LinkedList<Activity> *listOfAllActivities = new LinkedList<Activity>;
 
-    if (argc > 5)
+    if (argc == 6)
     {
         string bugString = argv[5];
         if (bugString == "y")
