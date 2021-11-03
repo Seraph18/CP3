@@ -23,7 +23,6 @@ Venue::Venue(string venueName, string location, int capacity){
 
 void Venue::print(){
     cout << "Venue Name: " << this->getVenueName() << " Location: " << this->getVenueLocation() << " Max-Capacity: " << this->getVenueCapacity() << endl;
-    //cout << this->getOutput() << endl;
 }
 
 bool Venue::operator==(const Venue& other){

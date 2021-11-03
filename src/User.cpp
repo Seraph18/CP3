@@ -55,7 +55,6 @@ bool User::addActivityToUser(Activity *activityToAdd, int currentLine, string at
             return false;
         }
         this->listOfUserActivities.addNewNode(*activityToAdd);
-        cout << "Added" << endl;
         return true;
     }
     else
@@ -107,6 +106,5 @@ string User::getAttendanceDump()
 
         currNode = currNode->next;
     }
-    //cout << total << endl;
     return total;
 }

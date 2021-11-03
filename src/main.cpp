@@ -7,6 +7,28 @@
 
 using namespace std;
 
+// Extension of where output files should go
+string const outputLocation = "OutputFiles/";
+
+//Used to find core name of original input file to create a parallel output file later on
+string getFileRealName(string filePath)
+{
+    string realName = "";
+    for (int i = 0; i < filePath.size(); ++i)
+    {
+        if (filePath.at(i) == '/')
+        {
+            realName = "";
+        }
+        else
+        {
+            realName += filePath.at(i);
+        }
+    }
+    return realName;
+}
+
+
 // Read in all the files
 
 /*Read and load the venueFile*/
@@ -264,7 +286,6 @@ void readAttendanceFile(string attendancePath, LinkedList<Activity> *listOfAllAc
     Node<Activity> *currNode = listOfAllActivities->getFirstNode();
     for (int i = 0; i < listOfAllActivities->getNElements(); ++i)
     {
-        currNode->data.getVenue().print();
         currNode = currNode->next;
     }
 
@@ -305,7 +326,6 @@ void readAttendanceFile(string attendancePath, LinkedList<Activity> *listOfAllAc
             if (listOfAllUsers->isPresent(u))
             {
                 User *currentUser = listOfAllUsers->getitem(u);
-                cout << "Add Act" << endl;
                 currentUser->addActivityToUser(activityToAdd, lineCount, attendancePath);
             }
         }
@@ -318,10 +338,16 @@ void readAttendanceFile(string attendancePath, LinkedList<Activity> *listOfAllAc
 // Output new files
 
 // Write new ActivityFile
-void writeActivityFile(LinkedList<Activity> *listOfAllActivities)
+void writeActivityFile(LinkedList<Activity> *listOfAllActivities, string inputFilePath, bool debugging)
 {
     ofstream activityOut;
-    activityOut.open("OutputFiles/activities.cp3out.txt");
+    string newFileName = outputLocation + getFileRealName(inputFilePath);
+    newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
+    if (debugging)
+        cout << newFileName << endl;
+    newFileName += "cp3out.txt";
+
+    activityOut.open(newFileName);
 
     Node<Activity> *currNode = listOfAllActivities->getFirstNode();
     for (int i = 0; i < listOfAllActivities->getNElements(); ++i)
@@ -334,11 +360,16 @@ void writeActivityFile(LinkedList<Activity> *listOfAllActivities)
 }
 
 // Write new VenueFile
-void writeVenueFile(LinkedList<Venue> *listOfAllVenues)
+void writeVenueFile(LinkedList<Venue> *listOfAllVenues, string inputFilePath, bool debugging)
 {
     ofstream venueOut;
-    venueOut.open("OutputFiles/venues.cp3out.txt");
+    string newFileName = outputLocation + getFileRealName(inputFilePath);
+    newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
+    if (debugging)
+        cout << newFileName << endl;
+    newFileName += "cp3out.txt";
 
+    venueOut.open(newFileName);
     Node<Venue> *currNode = listOfAllVenues->getFirstNode();
     for (int i = 0; i < listOfAllVenues->getNElements(); ++i)
     {
@@ -350,11 +381,16 @@ void writeVenueFile(LinkedList<Venue> *listOfAllVenues)
 }
 
 // Write new UserFile
-void writeUserFile(LinkedList<User> *listOfAllUsers)
+void writeUserFile(LinkedList<User> *listOfAllUsers, string inputFilePath, bool debugging)
 {
     ofstream userOut;
-    userOut.open("OutputFiles/users.cp3out.txt");
+    string newFileName = outputLocation + getFileRealName(inputFilePath);
+    newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
+    if (debugging)
+        cout << newFileName << endl;
+    newFileName += "cp3out.txt";
 
+    userOut.open(newFileName);
     Node<User> *currNode = listOfAllUsers->getFirstNode();
     for (int i = 0; i < listOfAllUsers->getNElements(); ++i)
     {
@@ -366,10 +402,16 @@ void writeUserFile(LinkedList<User> *listOfAllUsers)
 }
 
 // Write new AttendanceFile
-void writeAttendanceFile(LinkedList<User> *listOfAllUsers)
+void writeAttendanceFile(LinkedList<User> *listOfAllUsers, string inputFilePath, bool debugging)
 {
     ofstream attOut;
-    attOut.open("OutputFiles/attendance.cp3out.txt");
+    string newFileName = outputLocation + getFileRealName(inputFilePath);
+    newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
+    if (debugging)
+        cout << newFileName << endl;
+    newFileName += "cp3out.txt";
+    attOut.open(newFileName);
+
     Node<User> *currNode = listOfAllUsers->getFirstNode();
     for (int i = 0; i < listOfAllUsers->getNElements(); ++i)
     {
@@ -379,6 +421,7 @@ void writeAttendanceFile(LinkedList<User> *listOfAllUsers)
 
     attOut.close();
 }
+
 
 // Input layout = ./cp3 <venuefile> <userfile> <activityfile> <attendancefile> <Debugging?: 'y' | 'n'>
 
@@ -407,23 +450,34 @@ int main(int argc, char *const argv[])
 
     // Deal with venuesFirst
     readVenueFile(venuePath, listOfAllVenues, debugging);
+    if (debugging)
+        cout << "Venue Read Done" << endl;
     // Deal with list of users
     readUserFile(userPath, listOfAllUsers, debugging);
+    if (debugging)
+        cout << "User Read Done" << endl;
     // Deal with list of activities
     readActivityFile(activityPath, listOfAllActivities, listOfAllVenues, listOfAllUsers, debugging);
-
+    if (debugging)
+        cout << "Activity Read Done" << endl;
     // Deal with attendance list
     readAttendanceFile(attendancePath, listOfAllActivities, listOfAllUsers, debugging);
+    if (debugging)
+        cout << "Attendance Read Done" << endl;
 
     // Write files out
-    writeVenueFile(listOfAllVenues);
-    cout << "Venue Write Done" << endl;
-    writeUserFile(listOfAllUsers);
-    cout << "User Write Done" << endl;
-    writeActivityFile(listOfAllActivities);
-    cout << "Activity Write Done" << endl;
-    writeAttendanceFile(listOfAllUsers);
-    cout << "Attendance Write Done" << endl;
+    writeVenueFile(listOfAllVenues, venuePath, debugging);
+    if (debugging)
+        cout << "Venue Write Done" << endl;
+    writeUserFile(listOfAllUsers, userPath, debugging);
+    if (debugging)
+        cout << "User Write Done" << endl;
+    writeActivityFile(listOfAllActivities, activityPath, debugging);
+    if (debugging)
+        cout << "Activity Write Done" << endl;
+    writeAttendanceFile(listOfAllUsers, attendancePath, debugging);
+    if (debugging)
+        cout << "Attendance Write Done" << endl;
 
     return 0;
 }

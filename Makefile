@@ -55,7 +55,7 @@ Test.o: $(SRCPATH)Test.cpp
 # Specify the object files and executables that are generated
 # and need to be removed to re-compile the whole thing
 clean:
-	rm -rf *.o .nfs* *.exe test
+	rm -rf *.o .nfs* *.exe test OutputFiles/*
 
 clear: clean
 	clear
