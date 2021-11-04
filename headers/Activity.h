@@ -58,7 +58,7 @@ Activity(string activityTitle,
 
     void setTitle(string activityTitle) { this->activityTitle = activityTitle; }
 
-    bool checkIfActivityConflicts(Activity *activityToCheck, LinkedList<Activity> *listOfAllActivities, int currentLine, string activityPath);
+    bool checkIfActivityConflicts(LinkedList<Activity> *listOfAllActivities, int currentLine, string activityPath);
 
     Time getStartTime() { return startTime; }
     Time getEndTime() { return endTime; }

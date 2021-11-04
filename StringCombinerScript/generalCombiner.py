@@ -1,5 +1,7 @@
 #Aligns word lists next to each other, one from each on each line
 
+#Activity creator: /usr/bin/python3 */generalCombiner.py storageFiles/ActivityFile.txt StringCombinerScript/textLists/ListOfActivities.txt StringCombinerScript/textLists/ListOfUserNames.txt StringCombinerScript/VenueCombiner/ListOfVenues.txt StringCombinerScript/textLists/ListOfExclusive.txt
+
 import random
 import sys
 
@@ -97,6 +99,7 @@ else:
         wordLists.append(currList)
         newFile.close()
     
+    print(sys.argv)
     #Actually add them to the new File
     fileToPrintTo = open(sys.argv[1], 'w')
 
@@ -112,7 +115,7 @@ else:
             if(j != len(wordLists)-1):
                 fileToPrintTo.write(" ")
 
-                if(j == 2 and True):
+                if(j == 1 and True):
                     dateAndTimes = generateRandomDates()
                     fileToPrintTo.write(dateAndTimes[0] + " " + dateAndTimes[1] + " " + dateAndTimes[2] + " " + dateAndTimes[3] + " ")
             else: 

@@ -73,27 +73,34 @@ Activity::Activity(string activityTitle, string creator, Venue venue, Time start
     this->exclusive = exclusive;
 }
 
-bool Activity::checkIfActivityConflicts(Activity *activityToCheck, LinkedList<Activity> *listOfAllActivities, int currentLine, string activityPath)
+bool Activity::checkIfActivityConflicts(LinkedList<Activity> *listOfAllActivities, int currentLine, string activityPath)
 {
+    bool originalIsExclusive = this->isExclusive();
     Node<Activity> *currNode = listOfAllActivities->getFirstNode();
 
     for (int i = 0; i < listOfAllActivities->getNElements(); ++i)
     {
-        if (currNode->data.startTime < activityToCheck->startTime && activityToCheck->startTime < currNode->data.endTime)
+        if (this->startTime < currNode->data.startTime && currNode->data.startTime < this->endTime)
         {
-            cout << "Activity file " << activityPath << "line " << currentLine
-                 << ": Activity " << activityToCheck->getTitle() << " would conflict with "
-                 << currNode->data.getTitle() << " - ignoring." << endl;
+            if (currNode->data.isExclusive() || originalIsExclusive)
+            {
+                cout << "Activity file " << activityPath << "line " << currentLine
+                     << ": Activity " << this->getTitle() << " would conflict with "
+                     << currNode->data.getTitle() << " - ignoring." << endl;
 
-            return true;
+                return true;
+            }
         }
-        else if (activityToCheck->startTime < currNode->data.startTime && currNode->data.startTime < activityToCheck->endTime)
+        else if (currNode->data.startTime < this->startTime && this->startTime < currNode->data.endTime)
         {
-            cout << "Activity file " << activityPath << "line " << currentLine
-                 << ": Activity " << activityToCheck->getTitle() << " would conflict with "
-                 << currNode->data.getTitle() << " - ignoring." << endl;
+            if (currNode->data.isExclusive() || originalIsExclusive)
+            {
+                cout << "Activity file " << activityPath << "line " << currentLine
+                     << ": Activity " << this->getTitle() << " would conflict with "
+                     << currNode->data.getTitle() << " - ignoring." << endl;
 
-            return true;
+                return true;
+            }
         }
     }
     return false;

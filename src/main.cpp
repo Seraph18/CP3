@@ -10,7 +10,7 @@ using namespace std;
 // Extension of where output files should go
 string const outputLocation = "OutputFiles/";
 
-//Used to find core name of original input file to create a parallel output file later on
+// Used to find core name of original input file to create a parallel output file later on
 string getFileRealName(string filePath)
 {
     string realName = "";
@@ -27,7 +27,6 @@ string getFileRealName(string filePath)
     }
     return realName;
 }
-
 
 // Read in all the files
 
@@ -222,19 +221,6 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
                     }
                     currentVal = "";
                 }
-                else if (venue.getVenueName() == "")
-                {
-                    string venueName = currentVal.substr(0, currentVal.size() - 1);
-                    // Check if venue exists
-                    venue.setVenueName(venueName);
-                    if (!listOfAllVenues->isPresent(venue))
-                    {
-                        currentVal = "";
-                        break;
-                    }
-                    venue = *listOfAllVenues->getitem(venue);
-                    currentVal = "";
-                }
                 else if (startTime == "")
                 {
                     startTime = currentVal.substr(0, currentVal.size() - 1);
@@ -255,10 +241,23 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
                     endDate = currentVal.substr(0, currentVal.size() - 1);
                     currentVal = "";
                 }
+                else if (venue.getVenueName() == "")
+                {
+                    string venueName = currentVal.substr(0, currentVal.size() - 1);
+                    // Check if venue exists
+                    venue.setVenueName(venueName);
+                    if (!listOfAllVenues->isPresent(venue))
+                    {
+                        currentVal = "";
+                        break;
+                    }
+                    venue = *listOfAllVenues->getitem(venue);
+                    currentVal = "";
+                }
             }
             if (i == currLine.size() - 1)
             {
-                exclusive = currentVal.substr(0, currentVal.size() - 1);
+                exclusive = currentVal.substr(0, currentVal.size());
                 currentVal = "";
                 shouldMakeNewActivity = true;
             }
@@ -266,7 +265,10 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
         if (shouldMakeNewActivity)
         {
             Activity a(activityTitle, creator, &venue, startTime, startDate, endTime, endDate, exclusive);
-            listOfAllActivities->addNewNode(a);
+            if (!a.checkIfActivityConflicts(listOfAllActivities, lineCount, activityPath))
+            {
+                listOfAllActivities->addNewNode(a);
+            }
         }
     }
     ActivityFile.close();
@@ -422,12 +424,10 @@ void writeAttendanceFile(LinkedList<User> *listOfAllUsers, string inputFilePath,
     attOut.close();
 }
 
-
 // Input layout = ./cp3 <venuefile> <userfile> <activityfile> <attendancefile> <Debugging?: 'y' | 'n'>
 
 int main(int argc, char *const argv[])
 {
-    cout << argc << endl;
     if (argc < 5 || argc > 6)
     {
         cout << "Incorrect Usage..." << endl;
