@@ -1,4 +1,5 @@
 Levi’s_Stadium 4516 Wyoming
+Levi’s_Stadium 4516 Wyoming
 University_of_Boston_Stadium 9259 Wisconsin
 MetLife_Stadium 6455 West_Virginia
 Mercedes-Benz_Superdome 2565 Washington
@@ -27,3 +28,5 @@ Rice_Stadium 6458 Delaware
 Tulane_Stadium 7369 Arkansas
 Miami_Orange_Bowl 9361 Alaska
 Los_Angeles_Memorial_Coliseum 498 Alabama
+JoshsHouse 1 Alabama
+Bartle 498 Alabama

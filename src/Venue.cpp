@@ -27,7 +27,7 @@ void Venue::print(){
 
 bool Venue::operator==(const Venue& other){
     if(this->venueName == other.venueName){
-        return true;
+            return true;
     }
     return false;
 }

@@ -7,59 +7,75 @@ User::User()
     this->lastName = "";
 }
 
-User::User(string name){
+User::User(string name)
+{
     this->userName = name;
     this->firstName = "";
     this->lastName = "";
 }
 
 User::User(string userName, string firstName, string lastName)
-    {
-        this->userName = userName;
-        this->firstName = firstName;
-        this->lastName = lastName;
-    }
+{
+    this->userName = userName;
+    this->firstName = firstName;
+    this->lastName = lastName;
+}
 
 // False if there is a time conflict, Ture if all good
+
 bool User::checkIfActivityConflicts(Activity *activityToCheck, int currentLine, string attendancePath)
 {
-    Node<Activity> *currNode = this->getListOfActivities()->getFirstNode();
+    bool originalIsExclusive = activityToCheck->isExclusive();
+    Node<Activity> *currNode = listOfUserActivities.getFirstNode();
 
-    for (int i = 0; i < this->getListOfActivities()->getNElements(); ++i)
+    for (int i = 0; i < listOfUserActivities.getNElements(); ++i)
     {
-        if (currNode->data.getStartTime() < activityToCheck->getStartTime() && activityToCheck->getStartTime() < currNode->data.getEndTime())
+        if (activityToCheck->getStartTime() < currNode->data.getStartTime() && currNode->data.getStartTime() < activityToCheck->getEndTime())
         {
-            cout << "Attendance file " << attendancePath << " line " << currentLine << ": \nUser " << this->getUserName() << " cannot attend " << activityToCheck->getTitle() << ": user is busy with " << currNode->data.getTitle() << " - ignoring." << endl;
+            if (currNode->data.isExclusive() || originalIsExclusive)
+            {
+                cout << "Attendance file " << attendancePath << " line " << currentLine
+                     << ": User " << this->getUserName() << " cannot attend "
+                     << activityToCheck->getTitle() << ": user is busy with " 
+                     << currNode->data.getTitle() << " - ignoring." << endl;
 
-            return false;
+                return true;
+            }
         }
-        else if (activityToCheck->getStartTime() < currNode->data.getStartTime() && currNode->data.getStartTime() < activityToCheck->getEndTime())
+        else if (currNode->data.getStartTime() < activityToCheck->getStartTime() && activityToCheck->getStartTime() < currNode->data.getEndTime())
         {
-            cout << "Attendance file " << attendancePath << " line " << currentLine << ": \nUser " << this->getUserName() << " cannot attend " << activityToCheck->getTitle() << ": user is busy with " << currNode->data.getTitle() << " - ignoring." << endl;
+            if (currNode->data.isExclusive() || originalIsExclusive)
+            {
+                cout << "Attendance file " << attendancePath << " line " << currentLine 
+                << ": User " << this->getUserName() << " cannot attend " 
+                << activityToCheck->getTitle() << ": user is busy with " 
+                << currNode->data.getTitle() << " - ignoring." << endl;
 
-            return false;
+                return true;
+            }
         }
     }
-    return true;
+    return false;
 }
 
 bool User::addActivityToUser(Activity *activityToAdd, int currentLine, string attendancePath)
 {
-    Venue tempVenue = activityToAdd->getVenue();
     // Check if there is room in the venue
-    if (tempVenue.getVenueCurrentCapacity() < tempVenue.getVenueCapacity())
+    if (activityToAdd->getVenue()->getVenueCurrentCapacity() < activityToAdd->getVenue()->getVenueCapacity())
     {
         // Check for possible time conflict
-        if (!checkIfActivityConflicts(activityToAdd, currentLine, attendancePath))
+        if (checkIfActivityConflicts(activityToAdd, currentLine, attendancePath))
         {
             return false;
         }
         this->listOfUserActivities.addNewNode(*activityToAdd);
+        activityToAdd->addParticipant();
         return true;
     }
     else
     {
-        cout << "Attendance file " << attendancePath << "line " << currentLine << ": \nUser " << this->getUserName() << " cannot attend " << activityToAdd->getTitle() << ": venue is full - ignoring." << endl;
+        cout << "Attendance file " << attendancePath << "line " << currentLine
+             << ": User " << this->getUserName() << " cannot attend " << activityToAdd->getTitle() << ": venue is full - ignoring." << endl;
 
         return false;
     }

@@ -46,5 +46,7 @@ Rubeus_Hagrid David Garcia
 Dobby William Jones 
 Luna_Lovegood Michael Brown 
 Professor_Albus_Dumbledore Robert Williams 
-Hermione_Ganger John Johnson 
+Hermione_Ganger John Johnson
 Harry_Potter James Smith 
+Harry_Potter James Smith 
+Vold Tom Riddle

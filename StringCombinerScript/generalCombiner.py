@@ -1,13 +1,14 @@
 #Aligns word lists next to each other, one from each on each line
 
-#Activity creator: /usr/bin/python3 */generalCombiner.py storageFiles/ActivityFile.txt StringCombinerScript/textLists/ListOfActivities.txt StringCombinerScript/textLists/ListOfUserNames.txt StringCombinerScript/VenueCombiner/ListOfVenues.txt StringCombinerScript/textLists/ListOfExclusive.txt
+#Activity creator: 
+# /usr/bin/python3 */generalCombiner.py storageFiles/ActivityFile.txt StringCombinerScript/textLists/ListOfActivities.txt StringCombinerScript/textLists/ListOfUserNames.txt StringCombinerScript/VenueCombiner/ListOfVenues.txt StringCombinerScript/textLists/ListOfExclusive.txt
 
 import random
 import sys
 
 
 
-def generateRandomDates(): #MM-DD-YYYY
+def generateRandomDates(): #DD-MM-YYYY
     startMonth = random.randint(1, 12)
     startDay = random.randint(1, 30)
     startYear = random.randint(1776, 2021)
@@ -33,8 +34,8 @@ def generateRandomDates(): #MM-DD-YYYY
     
     
 
-    startDate = str(startMonth) + "-" + str(startDay) + "-" + str(startYear)
-    endDate = str(endMonth) + "-" + str(endDay) + "-" + str(endYear)
+    startDate = str(startDay) + "-" + str(startMonth) + "-" + str(startYear)
+    endDate = str(endDay) + "-" + str(endMonth) + "-" + str(endYear)
     
     #HH:MM:SS  
     startMinute = random.randint(1, 59)

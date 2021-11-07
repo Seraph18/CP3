@@ -21,7 +21,7 @@ Time::Time()
 }
 
 bool Time::dateValid(string date)
-{ // MM-DD-YYYY
+{ // DD--MM-YYYY
     int dashCount = 0;
 
     if (date.length() > 10 || date.length() < 8) // Length Test
@@ -78,8 +78,8 @@ void Time::setTime(string time)
 void Time::setDate(string date)
 { // MM-DD-YYYY
     this->date = date;
-    this->month = stoi(date.substr(0, 2));
-    this->day = stoi(date.substr(3, 2));
+    this->day = stoi(date.substr(0, 2));
+    this->month = stoi(date.substr(3, 2));
     this->year = stoi(date.substr(6, 4));
 
     // Load into array
@@ -97,35 +97,35 @@ void Time::setDateAndTime(string date, string time)
 bool Time::operator<(const Time &timeToCompare)
 {
 
-    if (this->getYears() > timeToCompare.year)
+    if (this->getYears() < timeToCompare.year)
     {
         //cout << getYears() << " and other: " << timeToCompare.year << endl;
 
-        return false;
+        return true;
     }
-    else if (this->getMonths() > timeToCompare.month)
+    else if (this->getMonths() < timeToCompare.month)
     {
-        return false;
+        return true;
     }
-    else if (this->getDays() > timeToCompare.day)
+    else if (this->getDays() < timeToCompare.day)
     {
-        return false;
+        return true;
     }
-    else if (this->getHours() > timeToCompare.hour)
+    else if (this->getHours() < timeToCompare.hour)
     {
-        return false;
+        return true;
     }
-    else if (this->getMinutes() > timeToCompare.minute)
+    else if (this->getMinutes() < timeToCompare.minute)
     {
-        return false;
+        return true;
     }
-    else if (this->getSeconds() > timeToCompare.second)
+    else if (this->getSeconds() < timeToCompare.second)
     {
-        return false;
+        return true;
     }
     else
     {
-        return true;
+        return false;
     }
 }
 

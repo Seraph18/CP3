@@ -12,7 +12,6 @@ int main(int argc, char const *argv[])
     Venue a("Stadium", "NYC", 400);
     Venue b("Field", "NYC", 400);
     list1.addNewNode(a);
-    cout << list1.isPresent(b) << endl;
 
     list1.print();
 

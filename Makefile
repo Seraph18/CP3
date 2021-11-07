@@ -3,12 +3,18 @@ SRCPATH = src/
 HEADERSPATH = headers/
 
 #Paths to the storage files
-ACTIVITYFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/ActivityFile.txt
-USERFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/UserFile.txt
-ATTENDANCEFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/AttendanceFile.txt
-VENUEFILEPATH = /home/josh/Documents/CS240/CP3/storageFiles/VenueFile.txt
+ACTIVITYFILEPATH = storageFiles/ActivityFile.txt
+USERFILEPATH = storageFiles/UserFile.txt
+ATTENDANCEFILEPATH = storageFiles/AttendanceFile.txt
+VENUEFILEPATH = storageFiles/VenueFile.txt
+
+ERRORACTIVITYFILEPATH = storageFiles/ErrorTriggerInputs/ActivityFile.txt
+ERRORUSERFILEPATH = storageFiles/ErrorTriggerInputs/UserFile.txt
+ERRORATTENDANCEFILEPATH = storageFiles/ErrorTriggerInputs/AttendanceFile.txt
+ERRORVENUEFILEPATH = storageFiles/ErrorTriggerInputs/VenueFile.txt
 
 ALLPATHS = $(VENUEFILEPATH) $(USERFILEPATH) $(ACTIVITYFILEPATH) $(ATTENDANCEFILEPATH)
+ALLERRORPATHS = $(ERRORVENUEFILEPATH) $(ERRORUSERFILEPATH) $(ERRORACTIVITYFILEPATH) $(ERRORATTENDANCEFILEPATH)
 FULLCOMPILELIST = LinkedList.o Time.o Venue.o User.o Activity.o
 
 #Makefile for CP3
@@ -46,7 +52,13 @@ Time.o: $(SRCPATH)Time.cpp
 Venue.o: $(SRCPATH)Venue.cpp
 	$(CFLAGS)Venue.cpp -o Venue.o
 
-#Test target
+#Test targets
+er: errorTest
+
+errorTest: main runWithErrors
+
+runWithErrors: cp3
+	./cp3 $(ALLERRORPATHS)
 
 test: $(FULLCOMPILELIST) Test.o
 	g++ $(FULLCOMPILELIST) Test.o -o test

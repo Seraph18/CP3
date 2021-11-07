@@ -12,7 +12,7 @@ class Activity
 private:
     string activityTitle;
     string creator;
-    Venue venue;
+    Venue *venue;
     bool exclusive;
 
     Time startTime;
@@ -53,12 +53,12 @@ Activity(string activityTitle,
 
     string getTitle() { return this->activityTitle; }
     string getCreator() { return this->creator; }
-    Venue getVenue() { return this->venue; }
+    Venue* getVenue() { return this->venue; }
     bool isExclusive() { return exclusive; }
 
     void setTitle(string activityTitle) { this->activityTitle = activityTitle; }
 
-    bool checkIfActivityConflicts(LinkedList<Activity> *listOfAllActivities, int currentLine, string activityPath);
+    bool checkIfActivityConflicts(LinkedList<Activity> &listOfAllActivities, int currentLine, string activityPath);
 
     Time getStartTime() { return startTime; }
     Time getEndTime() { return endTime; }
@@ -68,5 +68,7 @@ Activity(string activityTitle,
     bool operator==(const Activity& other);
 
     string getOutput();
+
+    void addParticipant(); //Increment the venues current capacity
 };
 #endif

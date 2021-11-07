@@ -20,7 +20,6 @@ public:
     User();
     User(string name);
     User(string userName, string firstName, string lastName);
-    //~User();
 
     string getUserName() { return userName; }
     string getFirstName() { return firstName; }

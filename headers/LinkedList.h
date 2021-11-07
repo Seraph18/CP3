@@ -20,7 +20,7 @@ private:
 
 public:
     LinkedList();
-    //~LinkedList();
+    ~LinkedList();
 
     Node<T> *getFirstNode() { return firstNode; }
     int getNElements() { return nElements; }

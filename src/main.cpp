@@ -31,7 +31,7 @@ string getFileRealName(string filePath)
 // Read in all the files
 
 /*Read and load the venueFile*/
-void readVenueFile(string venuePath, LinkedList<Venue> *listOfAllVenues, bool debugging)
+void readVenueFile(string venuePath, LinkedList<Venue> &listOfAllVenues, bool debugging)
 {
     ifstream venueFile;
     venueFile.open(venuePath);
@@ -58,7 +58,7 @@ void readVenueFile(string venuePath, LinkedList<Venue> *listOfAllVenues, bool de
                     venueName = currentVal.substr(0, currentVal.size() - 1);
 
                     Venue v(venueName);
-                    if (listOfAllVenues->isPresent(v))
+                    if (listOfAllVenues.isPresent(v))
                     {
                         cout << "Venue file " << venuePath << " line " << lineCount << ": venue "
                              << venueName << " exists - ignoring." << endl;
@@ -83,8 +83,10 @@ void readVenueFile(string venuePath, LinkedList<Venue> *listOfAllVenues, bool de
         }
         if (shouldCreateVenue)
         {
-            Venue v(venueName, location, capacity);
-            listOfAllVenues->addNewNode(v);
+            Venue *v = new Venue(venueName);
+            v->setVenueLocation(location);
+            v->setVenueCapacity(capacity);
+            listOfAllVenues.addNewNode(*v);
         }
     }
 
@@ -92,13 +94,13 @@ void readVenueFile(string venuePath, LinkedList<Venue> *listOfAllVenues, bool de
 
     if (debugging)
     {
-        listOfAllVenues->print();
+        // listOfAllVenues->print();
     }
-    cout << "Finished Venue Read" << endl;
+    // cout << "Finished Venue Read" << endl;
 }
 
 /*Read and load the userFile*/
-void readUserFile(string userPath, LinkedList<User> *listOfAllUsers, bool debugging)
+void readUserFile(string userPath, LinkedList<User> &listOfAllUsers, bool debugging)
 {
     ifstream userFile;
     userFile.open(userPath);
@@ -126,7 +128,7 @@ void readUserFile(string userPath, LinkedList<User> *listOfAllUsers, bool debugg
                     User u;
                     u.setUsername(userName);
 
-                    if (listOfAllUsers->isPresent(u))
+                    if (listOfAllUsers.isPresent(u))
                     {
                         cout << "User file " << userPath << " line " << lineCount << ": userid "
                              << userName << " exists - ignoring." << endl;
@@ -151,20 +153,20 @@ void readUserFile(string userPath, LinkedList<User> *listOfAllUsers, bool debugg
         if (shouldCreateUser)
         {
             User newUser(userName, firstName, lastName);
-            listOfAllUsers->addNewNode(newUser);
+            listOfAllUsers.addNewNode(newUser);
         }
     }
     userFile.close();
 
     if (debugging)
     {
-        listOfAllUsers->print();
+        // listOfAllUsers->print();
     }
-    cout << "Finished User Read" << endl;
+    // cout << "Finished User Read" << endl;
 }
 
 /*Read and load the activityfile*/
-void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivities, LinkedList<Venue> *listOfAllVenues, LinkedList<User> *listOfAllUsers, bool debugging)
+void readActivityFile(string activityPath, LinkedList<Activity> &listOfAllActivities, LinkedList<Venue> &listOfAllVenues, LinkedList<User> &listOfAllUsers, bool debugging)
 {
 
     ifstream ActivityFile;
@@ -177,7 +179,7 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
         ++lineCount;
         string activityTitle = "";
         string creator = "";
-        Venue venue;
+        Venue *venue;
         string startTime = "";
         string startDate = "";
         string endTime = "";
@@ -197,7 +199,7 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
                     activityTitle = currentVal.substr(0, currentVal.size() - 1);
                     Activity a;
                     a.setTitle(activityTitle);
-                    if (listOfAllActivities->isPresent(a))
+                    if (listOfAllActivities.isPresent(a))
                     {
                         cout << "Activity file " << activityPath << " line "
                              << lineCount << ": activity " << activityTitle << " exists - ignoring." << endl;
@@ -212,7 +214,7 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
                     creator = currentVal.substr(0, currentVal.size() - 1);
                     User x;
                     x.setUsername(creator);
-                    if (!listOfAllUsers->isPresent(x))
+                    if (!listOfAllUsers.isPresent(x))
                     {
                         cout << "Activity file " << activityPath << " line " << lineCount << ": user " << creator
                              << " does not exist - ignoring." << endl;
@@ -241,18 +243,26 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
                     endDate = currentVal.substr(0, currentVal.size() - 1);
                     currentVal = "";
                 }
-                else if (venue.getVenueName() == "")
+                else if (!venue)
                 {
                     string venueName = currentVal.substr(0, currentVal.size() - 1);
                     // Check if venue exists
-                    venue.setVenueName(venueName);
-                    if (!listOfAllVenues->isPresent(venue))
+
+                    Venue v(venueName);
+
+                    if (!listOfAllVenues.isPresent(v))
                     {
+                        cout << "Activity file " << activityPath << " line " << lineCount
+                             << ": venue " << venueName << " does not exist - ignoring." << endl;
                         currentVal = "";
                         break;
                     }
-                    venue = *listOfAllVenues->getitem(venue);
-                    currentVal = "";
+                    else
+                    {
+                        venue = listOfAllVenues.getitem(v);
+                        // cout << venue << lineCount << "    " << venue->getVenueCapacity() << endl;
+                        currentVal = "";
+                    }
                 }
             }
             if (i == currLine.size() - 1)
@@ -264,29 +274,33 @@ void readActivityFile(string activityPath, LinkedList<Activity> *listOfAllActivi
         }
         if (shouldMakeNewActivity)
         {
-            Activity a(activityTitle, creator, &venue, startTime, startDate, endTime, endDate, exclusive);
+            Activity a(activityTitle, creator, venue, startTime, startDate, endTime, endDate, exclusive);
             if (!a.checkIfActivityConflicts(listOfAllActivities, lineCount, activityPath))
             {
-                listOfAllActivities->addNewNode(a);
+                listOfAllActivities.addNewNode(a);
             }
         }
+        venue = NULL;
     }
     ActivityFile.close();
 
     if (debugging)
     {
-        listOfAllActivities->print();
+        /*if (listOfAllActivities != nullptr)
+            listOfAllActivities->print();
+        else
+            cout << "List of activities is empty" << endl;*/
     }
-    cout << "Finished Activity Read" << endl;
+    // cout << "Finished Activity Read" << endl;
 }
 
-void readAttendanceFile(string attendancePath, LinkedList<Activity> *listOfAllActivities, LinkedList<User> *listOfAllUsers, bool debugging)
+void readAttendanceFile(string attendancePath, LinkedList<Activity> &listOfAllActivities, LinkedList<User> &listOfAllUsers, bool debugging)
 {
     ifstream attFile;
     attFile.open(attendancePath);
 
-    Node<Activity> *currNode = listOfAllActivities->getFirstNode();
-    for (int i = 0; i < listOfAllActivities->getNElements(); ++i)
+    Node<Activity> *currNode = listOfAllActivities.getFirstNode();
+    for (int i = 0; i < listOfAllActivities.getNElements(); ++i)
     {
         currNode = currNode->next;
     }
@@ -321,20 +335,19 @@ void readAttendanceFile(string attendancePath, LinkedList<Activity> *listOfAllAc
         Activity a;
         a.setTitle(activityTitle);
 
-        if (listOfAllActivities->isPresent(a))
+        if (listOfAllActivities.isPresent(a))
         {
-            Activity *activityToAdd = listOfAllActivities->getitem(a);
+            Activity *activityToAdd = listOfAllActivities.getitem(a);
 
-            if (listOfAllUsers->isPresent(u))
+            if (listOfAllUsers.isPresent(u))
             {
-                User *currentUser = listOfAllUsers->getitem(u);
+                User *currentUser = listOfAllUsers.getitem(u);
                 currentUser->addActivityToUser(activityToAdd, lineCount, attendancePath);
             }
         }
     }
-
     attFile.close();
-    cout << "Finished Attendance Read" << endl;
+    // cout << "Finished Attendance Read" << endl;
 }
 
 // Output new files
@@ -345,8 +358,6 @@ void writeActivityFile(LinkedList<Activity> *listOfAllActivities, string inputFi
     ofstream activityOut;
     string newFileName = outputLocation + getFileRealName(inputFilePath);
     newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
-    if (debugging)
-        cout << newFileName << endl;
     newFileName += "cp3out.txt";
 
     activityOut.open(newFileName);
@@ -367,8 +378,6 @@ void writeVenueFile(LinkedList<Venue> *listOfAllVenues, string inputFilePath, bo
     ofstream venueOut;
     string newFileName = outputLocation + getFileRealName(inputFilePath);
     newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
-    if (debugging)
-        cout << newFileName << endl;
     newFileName += "cp3out.txt";
 
     venueOut.open(newFileName);
@@ -388,8 +397,6 @@ void writeUserFile(LinkedList<User> *listOfAllUsers, string inputFilePath, bool 
     ofstream userOut;
     string newFileName = outputLocation + getFileRealName(inputFilePath);
     newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
-    if (debugging)
-        cout << newFileName << endl;
     newFileName += "cp3out.txt";
 
     userOut.open(newFileName);
@@ -409,8 +416,6 @@ void writeAttendanceFile(LinkedList<User> *listOfAllUsers, string inputFilePath,
     ofstream attOut;
     string newFileName = outputLocation + getFileRealName(inputFilePath);
     newFileName = newFileName.replace(newFileName.size() - 3, newFileName.size(), "");
-    if (debugging)
-        cout << newFileName << endl;
     newFileName += "cp3out.txt";
     attOut.open(newFileName);
 
@@ -458,19 +463,19 @@ int main(int argc, char *const argv[])
     // Read files in
 
     // Deal with venuesFirst
-    readVenueFile(venuePath, listOfAllVenues, debugging);
+    readVenueFile(venuePath, *listOfAllVenues, debugging);
     if (debugging)
         cout << "Venue Read Done" << endl;
     // Deal with list of users
-    readUserFile(userPath, listOfAllUsers, debugging);
+    readUserFile(userPath, *listOfAllUsers, debugging);
     if (debugging)
         cout << "User Read Done" << endl;
     // Deal with list of activities
-    readActivityFile(activityPath, listOfAllActivities, listOfAllVenues, listOfAllUsers, debugging);
+    readActivityFile(activityPath, *listOfAllActivities, *listOfAllVenues, *listOfAllUsers, debugging);
     if (debugging)
         cout << "Activity Read Done" << endl;
     // Deal with attendance list
-    readAttendanceFile(attendancePath, listOfAllActivities, listOfAllUsers, debugging);
+    readAttendanceFile(attendancePath, *listOfAllActivities, *listOfAllUsers, debugging);
     if (debugging)
         cout << "Attendance Read Done" << endl;
 
@@ -487,6 +492,13 @@ int main(int argc, char *const argv[])
     writeAttendanceFile(listOfAllUsers, attendancePath, debugging);
     if (debugging)
         cout << "Attendance Write Done" << endl;
+
+    // free space
+    delete listOfAllActivities;
+    delete listOfAllUsers;
+
+    Node<Venue> *currNode= listOfAllVenues->getFirstNode();
+        delete listOfAllVenues;
 
     return 0;
 }

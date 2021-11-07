@@ -8,6 +8,19 @@ LinkedList<T>::LinkedList()
 }
 
 template <typename T>
+LinkedList<T>::~LinkedList()
+{
+    
+    Node<T> *currNode = this->firstNode;
+    for (int i = 0; i < this->nElements; ++i)
+    {
+            Node<T> *prevNode = currNode;
+            currNode = currNode->next;
+            delete (prevNode);
+    }
+}
+
+template <typename T>
 void LinkedList<T>::addNewNode(T const &newData)
 {
     // Create new node
@@ -42,7 +55,7 @@ bool LinkedList<T>::isPresent(T const &newValue)
 }
 
 template <typename T>
-T* LinkedList<T>::getitem(T *itemToLookFor)
+T *LinkedList<T>::getitem(T *itemToLookFor)
 {
     Node<T> *currNode = this->firstNode;
 
@@ -61,7 +74,8 @@ T* LinkedList<T>::getitem(T *itemToLookFor)
 }
 
 template <typename T>
-T* LinkedList<T>::getitem(T const &itemToLookFor){
+T *LinkedList<T>::getitem(T const &itemToLookFor)
+{
     Node<T> *currNode = this->firstNode;
 
     while (currNode != nullptr)
@@ -78,14 +92,16 @@ T* LinkedList<T>::getitem(T const &itemToLookFor){
     return nullptr;
 }
 
-
 template <typename T>
 void LinkedList<T>::print()
 {
-    Node<T> *currNode;
-    for (currNode = this->firstNode; currNode->next != nullptr; currNode = currNode->next)
+    if (this->nElements != 0)
     {
+        Node<T> *currNode;
+        for (currNode = this->firstNode; currNode->next != nullptr; currNode = currNode->next)
+        {
+            currNode->data.print();
+        }
         currNode->data.print();
     }
-    currNode->data.print();
 }

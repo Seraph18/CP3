@@ -5,7 +5,7 @@ Activity::Activity()
 {
     this->activityTitle = "";
     this->creator = "";
-    this->venue.setVenueName("");
+    this->venue = nullptr;
     this->exclusive = true;
 
     this->startTime.setDateAndTime("00-00-0000", "00:00:00");
@@ -23,7 +23,7 @@ Activity::Activity(string activityTitle,
 {
     this->activityTitle = activityTitle;
     this->creator = creator;
-    this->venue.setVenueName(venue);
+    this->venue->setVenueName(venue);
     this->startTime.setDateAndTime(startDate, startTime);
     this->endTime.setDateAndTime(endDate, endTime);
 
@@ -48,7 +48,7 @@ Activity::Activity(string activityTitle,
 {
     this->activityTitle = activityTitle;
     this->creator = creator;
-    this->venue = *venue;
+    this->venue = venue;
     this->startTime.setDateAndTime(startDate, startTime);
     this->endTime.setDateAndTime(endDate, endTime);
 
@@ -62,44 +62,36 @@ Activity::Activity(string activityTitle,
     }
 }
 
-// Object specialized constructor
-Activity::Activity(string activityTitle, string creator, Venue venue, Time startTime, Time endTime, bool exclusive)
-{
-    this->activityTitle = activityTitle;
-    this->creator = creator;
-    this->venue = venue;
-    this->startTime = startTime;
-    this->endTime = endTime;
-    this->exclusive = exclusive;
-}
-
-bool Activity::checkIfActivityConflicts(LinkedList<Activity> *listOfAllActivities, int currentLine, string activityPath)
+bool Activity::checkIfActivityConflicts(LinkedList<Activity> &listOfAllActivities, int currentLine, string activityPath)
 {
     bool originalIsExclusive = this->isExclusive();
-    Node<Activity> *currNode = listOfAllActivities->getFirstNode();
+    Node<Activity> *currNode = listOfAllActivities.getFirstNode();
 
-    for (int i = 0; i < listOfAllActivities->getNElements(); ++i)
+    for (int i = 0; i < listOfAllActivities.getNElements(); ++i)
     {
-        if (this->startTime < currNode->data.startTime && currNode->data.startTime < this->endTime)
+        if (this->venue == currNode->data.getVenue())
         {
-            if (currNode->data.isExclusive() || originalIsExclusive)
+            if (this->startTime < currNode->data.startTime && currNode->data.endTime < this->endTime)
             {
-                cout << "Activity file " << activityPath << "line " << currentLine
-                     << ": Activity " << this->getTitle() << " would conflict with "
-                     << currNode->data.getTitle() << " - ignoring." << endl;
+                if (currNode->data.isExclusive() || originalIsExclusive)
+                {
+                    cout << "Activity file " << activityPath << " line " << currentLine
+                         << ": Activity " << this->getTitle() << " would conflict with "
+                         << currNode->data.getTitle() << " - ignoring." << endl;
 
-                return true;
+                    return true;
+                }
             }
-        }
-        else if (currNode->data.startTime < this->startTime && this->startTime < currNode->data.endTime)
-        {
-            if (currNode->data.isExclusive() || originalIsExclusive)
+            else if (currNode->data.startTime < this->startTime && this->startTime < currNode->data.endTime)
             {
-                cout << "Activity file " << activityPath << "line " << currentLine
-                     << ": Activity " << this->getTitle() << " would conflict with "
-                     << currNode->data.getTitle() << " - ignoring." << endl;
+                if (currNode->data.isExclusive() || originalIsExclusive)
+                {
+                    cout << "Activity file " << activityPath << "line " << currentLine
+                         << ": Activity " << this->getTitle() << " would conflict with "
+                         << currNode->data.getTitle() << " - ignoring." << endl;
 
-                return true;
+                    return true;
+                }
             }
         }
     }
@@ -112,7 +104,7 @@ void Activity::print()
     cout << "Creator: " << creator << " ";
     cout << "Begins: [" << startTime.getTime() << ", " << startTime.getDate() << "] ";
     cout << "Ends: [" << endTime.getTime() << ", " << endTime.getDate() << "] ";
-    cout << "@ [" << venue.getVenueName() << "]" << endl;
+    cout << "@ [" << venue->getVenueName() << "]" << endl;
 }
 
 bool Activity::operator==(const Activity &other)
@@ -124,6 +116,10 @@ bool Activity::operator==(const Activity &other)
     return false;
 }
 
+void Activity::addParticipant(){
+    this->venue->increaseCurrentCapacity();
+}
+
 string Activity::getOutput()
 {
     string total = "";
@@ -133,7 +129,7 @@ string Activity::getOutput()
     total += this->getStartTime().getDate() + " ";
     total += this->getEndTime().getTime() + " ";
     total += this->getEndTime().getDate() + " ";
-    total += this->getVenue().getVenueName() + " ";
+    total += this->getVenue()->getVenueName() + " ";
 
     if (this->exclusive)
         total += "y";

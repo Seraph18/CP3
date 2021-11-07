@@ -1,0 +1,18 @@
+User file <userfile> line <N>: userid <userid> exists - ignoring.
+Activity file <activityfile> line <N>: activity <activitytitle> exists - ignoring.
+Activity file <activityfile> line <N>: user <userid> does not exist - ignoring.
+Activity file <activityfile> line <N>: venue <venuename> does not exist - ignoring.
+Activity file <activityfile> line <N>: Activity <activitytitle1> would conflict with <activitytitle2> - ignoring.
+Attendance file <attendancefile> line <N>: User <userid> cannot attend <activitytitle>: venue is full - ignoring.
+Attendance file <attendancefile> line <N>: User <userid> cannot attend <activitytitle>: user is busy with <activitytitle2> - ignoring.
+Venue file <venuefile> line <N>: venue <venuename> exists - ignoring.
+
+
+
+
+Venue file storageFiles/ErrorTriggerInputs/VenueFile.txt line 2: venue Levi’s_Stadium exists - ignoring.
+User file storageFiles/ErrorTriggerInputs/UserFile.txt line 51: userid Harry_Potter exists - ignoring.
+Activity file storageFiles/ErrorTriggerInputs/ActivityFile.txt line 2: activity Softball exists - ignoring.
+Activity file storageFiles/ErrorTriggerInputs/ActivityFile.txt line 3: user YoshGaroon does not exist - ignoring.
+Activity file storageFiles/ErrorTriggerInputs/ActivityFile.txtline 38: Activity Jumping would conflict with Firefighting - ignoring.
+Activity file storageFiles/ErrorTriggerInputs/ActivityFile.txtline 39: Activity Knitting would conflict with Firefighting - ignoring.
